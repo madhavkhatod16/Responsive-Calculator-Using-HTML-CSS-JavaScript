@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+<style>
+body{
+    background:#eaeaea;
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+}
+
+.calculator{
+    width:300px;
+    background:#1c1c1c;
+    padding:15px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+#d{
+    width:95%;
+    height:85px;
+    background:#2b2b2b;
+    color:white;
+    margin-top:4%;
+    font-size:30px;
+    text-align:right;
+    border:none;
+    border-radius:15px;
+    padding-right:12px;
+    margin-bottom:15px;
+}
+
+.row{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+button{
+    width:60px;
+    height:50px;
+    margin:5px;
+    font-size:22px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    transition:0.16s;
+    margin-top:2%;
+}
+
+.num{
+    background:#e0e0e0;
+}
+
+.op{
+    background:#e0e0e0;
+}
+
+.clear{
+    background:#ff453a;
+    color:white;
+}
+
+.equal{
+    background:#30d158;
+    color:white;
+}
+
+button:active{
+    transform:scale(0.85);
+}
+
+/* Mobile View */
+@media (max-width:750px){
+
+    .calculator{
+        width:90%;
+        max-width:320px;
+        padding:15px;
+    }
+
+    #d{
+        width:95%;
+        height:70px;
+        font-size:24px;
+    }
+
+    button{
+        width:21%;
+        height:50px;
+        font-size:18px;
+        margin:4px;
+    }
+
+    .row{
+        margin-bottom:6px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+    <input type="text" id="d">
+
+    <div class="row">
+        <button class="num" onclick="b='7';f()">7</button>
+        <button class="num" onclick="b='8';f()">8</button>
+        <button class="num" onclick="b='9';f()">9</button>
+        <button class="op" onclick="b='÷';f()">÷</button> 
+    </div>
+
+    <div class="row">
+        <button class="num" onclick="b='4';f()">4</button>
+        <button class="num" onclick="b='5';f()">5</button>
+        <button class="num" onclick="b='6';f()">6</button>
+        <button class="op" onclick="b='x';f()">×</button> 
+    </div>
+
+    <div class="row">
+        <button class="num" onclick="b='1';f()">1</button>
+        <button class="num" onclick="b='2';f()">2</button>
+        <button class="num" onclick="b='3';f()">3</button>
+        <button class="op" onclick="b='-';f()">−</button>
+    </div>
+
+    <div class="row">
+        <button class="clear" onclick="b='C';f()">C</button>
+        <button class="num" onclick="b='0';f()">0</button>
+        <button class="equal" onclick="b='=';f()">=</button>
+        <button class="op" onclick="b='+';f()">+</button>
+    </div>
+</div>
+
+<script>
+var b;
+
+function f() {
+    if (b == "C") {
+        document.getElementById("d").value = "";
+    } 
+    else if (b != "=") {
+        document.getElementById("d").value += b;
+    } 
+    else {
+        var a = document.getElementById("d").value;
+        var n = "";
+        var temp = 0;
+        var s = 0;
+        var o = "+"; 
+
+        for (var i = 0; i < a.length; i++) {
+            if (a[i] >= '0' && a[i] <= '9') {
+                n += a[i];
+            } else {
+               
+                if (o == "+") temp += Number(n);
+                else if (o == "-") temp -= Number(n);
+                else if (o == "x") temp *=  Number(n); 
+                else if (o == "÷") temp /=Number(n); 
+
+               
+                if (a[i] == "+" || a[i] == "-") {
+                    s += temp;
+                    temp = 0;
+                }
+
+                o = a[i]; 
+                n = "";
+            }
+        }
+
+
+        if (o == "+") temp = Number(n);
+        else if (o == "-") temp = -Number(n);
+        else if (o == "x") temp = temp * Number(n);
+        else if (o == "÷") temp = temp / Number(n);
+		
+		
+        s += temp;
+        document.getElementById("d").value = s;
+    }
+}
+</script>
+
+</body>
+</html>
